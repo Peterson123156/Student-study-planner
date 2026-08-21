@@ -1,0 +1,1096 @@
+/* =========================================
+   STUDYFLOW - MAIN JAVASCRIPT FILE
+   app.js
+========================================= */
+
+
+/* =========================================
+   1. LOCAL STORAGE DATA
+========================================= */
+
+// Get subjects from local storage
+let subjects = JSON.parse(localStorage.getItem("subjects")) || [];
+
+// Get assignments from local storage
+let assignments = JSON.parse(localStorage.getItem("assignments")) || [];
+
+// Get study schedules from local storage
+let schedules = JSON.parse(localStorage.getItem("schedules")) || [];
+
+// Get goals from local storage
+let goals = JSON.parse(localStorage.getItem("goals")) || [];
+
+
+/* =========================================
+   2. SAVE DATA FUNCTIONS
+========================================= */
+
+function saveSubjects() {
+    localStorage.setItem("subjects", JSON.stringify(subjects));
+}
+
+function saveAssignments() {
+    localStorage.setItem("assignments", JSON.stringify(assignments));
+}
+
+function saveSchedules() {
+    localStorage.setItem("schedules", JSON.stringify(schedules));
+}
+
+function saveGoals() {
+    localStorage.setItem("goals", JSON.stringify(goals));
+}
+
+
+/* =========================================
+   3. SUBJECTS SYSTEM
+========================================= */
+
+function addSubject(name) {
+
+    if (!name || name.trim() === "") {
+        alert("Please enter a subject name.");
+        return;
+    }
+
+    const newSubject = {
+        id: Date.now(),
+        name: name.trim()
+    };
+
+    subjects.push(newSubject);
+
+    saveSubjects();
+
+    displaySubjects();
+
+    updateDashboard();
+}
+
+
+function deleteSubject(id) {
+
+    subjects = subjects.filter(subject => subject.id !== id);
+
+    saveSubjects();
+
+    displaySubjects();
+
+    updateDashboard();
+}
+
+
+function displaySubjects() {
+
+    const subjectList =
+        document.getElementById("subjectList");
+
+    if (!subjectList) return;
+
+
+    subjectList.innerHTML = "";
+
+
+    if (subjects.length === 0) {
+
+        subjectList.innerHTML = `
+            <p class="empty-message">
+                No subjects added yet.
+            </p>
+        `;
+
+        return;
+    }
+
+
+    subjects.forEach(subject => {
+
+        const subjectItem = document.createElement("div");
+
+        subjectItem.classList.add("subject-item");
+
+
+        subjectItem.innerHTML = `
+
+            <div class="subject-name">
+
+                <span>📚</span>
+
+                <h3>${subject.name}</h3>
+
+            </div>
+
+
+            <button
+                class="delete-btn"
+                onclick="deleteSubject(${subject.id})"
+            >
+                Delete
+            </button>
+
+        `;
+
+
+        subjectList.appendChild(subjectItem);
+
+    });
+
+}
+
+
+/* =========================================
+   4. ASSIGNMENT SYSTEM
+========================================= */
+
+function addAssignment(title, subject, deadline) {
+
+    if (
+        !title ||
+        title.trim() === "" ||
+        !subject ||
+        !deadline
+    ) {
+
+        alert("Please complete all fields.");
+
+        return;
+
+    }
+
+
+    const newAssignment = {
+
+        id: Date.now(),
+
+        title: title.trim(),
+
+        subject: subject,
+
+        deadline: deadline,
+
+        completed: false
+
+    };
+
+
+    assignments.push(newAssignment);
+
+    saveAssignments();
+
+    displayAssignments();
+
+    updateDashboard();
+
+}
+
+
+function deleteAssignment(id) {
+
+    assignments =
+        assignments.filter(
+            assignment =>
+                assignment.id !== id
+        );
+
+
+    saveAssignments();
+
+    displayAssignments();
+
+    updateDashboard();
+
+}
+
+
+function toggleAssignment(id) {
+
+    assignments =
+        assignments.map(assignment => {
+
+            if (assignment.id === id) {
+
+                assignment.completed =
+                    !assignment.completed;
+
+            }
+
+            return assignment;
+
+        });
+
+
+    saveAssignments();
+
+    displayAssignments();
+
+    updateDashboard();
+
+}
+
+
+function displayAssignments() {
+
+    const assignmentList =
+        document.getElementById("assignmentList");
+
+
+    if (!assignmentList) return;
+
+
+    assignmentList.innerHTML = "";
+
+
+    if (assignments.length === 0) {
+
+        assignmentList.innerHTML = `
+
+            <p class="empty-message">
+
+                No assignments added yet.
+
+            </p>
+
+        `;
+
+        return;
+
+    }
+
+
+    assignments.forEach(assignment => {
+
+        const assignmentItem =
+            document.createElement("div");
+
+
+        assignmentItem.classList.add(
+            "assignment-item"
+        );
+
+
+        if (assignment.completed) {
+
+            assignmentItem.classList.add(
+                "completed"
+            );
+
+        }
+
+
+        assignmentItem.innerHTML = `
+
+            <div class="assignment-info">
+
+                <h3>
+                    ${assignment.title}
+                </h3>
+
+                <p>
+                    📚 ${assignment.subject}
+                </p>
+
+                <p>
+                    📅 Deadline:
+                    ${assignment.deadline}
+                </p>
+
+            </div>
+
+
+            <div class="assignment-actions">
+
+                <button
+                    class="complete-btn"
+                    onclick="toggleAssignment(${assignment.id})"
+                >
+
+                    ${
+                        assignment.completed
+                            ? "Completed ✓"
+                            : "Mark Complete"
+                    }
+
+                </button>
+
+
+                <button
+                    class="delete-btn"
+                    onclick="deleteAssignment(${assignment.id})"
+                >
+
+                    Delete
+
+                </button>
+
+            </div>
+
+        `;
+
+
+        assignmentList.appendChild(
+            assignmentItem
+        );
+
+    });
+
+}
+
+
+/* =========================================
+   5. STUDY SCHEDULE SYSTEM
+========================================= */
+
+function addSchedule(
+    subject,
+    day,
+    time
+) {
+
+    if (!subject || !day || !time) {
+
+        alert(
+            "Please complete all schedule fields."
+        );
+
+        return;
+
+    }
+
+
+    const newSchedule = {
+
+        id: Date.now(),
+
+        subject: subject,
+
+        day: day,
+
+        time: time
+
+    };
+
+
+    schedules.push(newSchedule);
+
+    saveSchedules();
+
+    displaySchedules();
+
+}
+
+
+function deleteSchedule(id) {
+
+    schedules =
+        schedules.filter(
+            schedule =>
+                schedule.id !== id
+        );
+
+
+    saveSchedules();
+
+    displaySchedules();
+
+}
+
+
+function displaySchedules() {
+
+    const scheduleList =
+        document.getElementById(
+            "scheduleList"
+        );
+
+
+    if (!scheduleList) return;
+
+
+    scheduleList.innerHTML = "";
+
+
+    if (schedules.length === 0) {
+
+        scheduleList.innerHTML = `
+
+            <p class="empty-message">
+
+                Your study schedule is empty.
+
+            </p>
+
+        `;
+
+        return;
+
+    }
+
+
+    schedules.forEach(schedule => {
+
+        const scheduleItem =
+            document.createElement("div");
+
+
+        scheduleItem.classList.add(
+            "schedule-item"
+        );
+
+
+        scheduleItem.innerHTML = `
+
+            <div>
+
+                <h3>
+                    📚 ${schedule.subject}
+                </h3>
+
+                <p>
+                    📅 ${schedule.day}
+                </p>
+
+                <p>
+                    🕒 ${schedule.time}
+                </p>
+
+            </div>
+
+
+            <button
+                class="delete-btn"
+                onclick="deleteSchedule(${schedule.id})"
+            >
+
+                Delete
+
+            </button>
+
+        `;
+
+
+        scheduleList.appendChild(
+            scheduleItem
+        );
+
+    });
+
+}
+
+
+/* =========================================
+   6. GOALS SYSTEM
+========================================= */
+
+function addGoal(title) {
+
+    if (!title || title.trim() === "") {
+
+        alert(
+            "Please enter a goal."
+        );
+
+        return;
+
+    }
+
+
+    const newGoal = {
+
+        id: Date.now(),
+
+        title: title.trim(),
+
+        progress: 0
+
+    };
+
+
+    goals.push(newGoal);
+
+    saveGoals();
+
+    displayGoals();
+
+    updateDashboard();
+
+}
+
+
+function deleteGoal(id) {
+
+    goals =
+        goals.filter(
+            goal => goal.id !== id
+        );
+
+
+    saveGoals();
+
+    displayGoals();
+
+    updateDashboard();
+
+}
+
+
+function updateGoalProgress(
+    id,
+    progress
+) {
+
+    goals =
+        goals.map(goal => {
+
+            if (goal.id === id) {
+
+                goal.progress =
+                    Number(progress);
+
+            }
+
+            return goal;
+
+        });
+
+
+    saveGoals();
+
+    displayGoals();
+
+    updateDashboard();
+
+}
+
+
+function displayGoals() {
+
+    const goalList =
+        document.getElementById(
+            "goalList"
+        );
+
+
+    if (!goalList) return;
+
+
+    goalList.innerHTML = "";
+
+
+    if (goals.length === 0) {
+
+        goalList.innerHTML = `
+
+            <p class="empty-message">
+
+                No goals created yet.
+
+            </p>
+
+        `;
+
+        return;
+
+    }
+
+
+    goals.forEach(goal => {
+
+        const goalItem =
+            document.createElement("div");
+
+
+        goalItem.classList.add(
+            "goal-item"
+        );
+
+
+        goalItem.innerHTML = `
+
+            <h3>
+                🎯 ${goal.title}
+            </h3>
+
+
+            <div class="progress-container">
+
+                <div
+                    class="progress-bar"
+                    style="
+                        width:
+                        ${goal.progress}%
+                    "
+                >
+                </div>
+
+            </div>
+
+
+            <p>
+                Progress:
+                ${goal.progress}%
+            </p>
+
+
+            <input
+                type="range"
+                min="0"
+                max="100"
+                value="${goal.progress}"
+
+                onchange="
+                    updateGoalProgress(
+                        ${goal.id},
+                        this.value
+                    )
+                "
+            >
+
+
+            <button
+                class="delete-btn"
+                onclick="deleteGoal(${goal.id})"
+            >
+
+                Delete Goal
+
+            </button>
+
+        `;
+
+
+        goalList.appendChild(
+            goalItem
+        );
+
+    });
+
+}
+
+
+/* =========================================
+   7. DASHBOARD / PROGRESS STATISTICS
+========================================= */
+
+function updateDashboard() {
+
+
+    // Total Subjects
+
+    const subjectCount =
+        document.getElementById(
+            "subjectCount"
+        );
+
+
+    if (subjectCount) {
+
+        subjectCount.textContent =
+            subjects.length;
+
+    }
+
+
+
+    // Total Assignments
+
+    const assignmentCount =
+        document.getElementById(
+            "assignmentCount"
+        );
+
+
+    if (assignmentCount) {
+
+        assignmentCount.textContent =
+            assignments.length;
+
+    }
+
+
+
+    // Completed Assignments
+
+    const completedAssignments =
+        assignments.filter(
+            assignment =>
+                assignment.completed
+        ).length;
+
+
+    const completedCount =
+        document.getElementById(
+            "completedCount"
+        );
+
+
+    if (completedCount) {
+
+        completedCount.textContent =
+            completedAssignments;
+
+    }
+
+
+
+    // Overall Progress
+
+    let overallProgress = 0;
+
+
+    if (assignments.length > 0) {
+
+        overallProgress =
+            Math.round(
+                (
+                    completedAssignments /
+                    assignments.length
+                ) * 100
+            );
+
+    }
+
+
+    const progressPercentage =
+        document.getElementById(
+            "progressPercentage"
+        );
+
+
+    if (progressPercentage) {
+
+        progressPercentage.textContent =
+            overallProgress + "%";
+
+    }
+
+
+
+    // Update Progress Bar
+
+    const overallProgressBar =
+        document.getElementById(
+            "overallProgressBar"
+        );
+
+
+    if (overallProgressBar) {
+
+        overallProgressBar.style.width =
+            overallProgress + "%";
+
+    }
+
+}
+
+
+/* =========================================
+   8. SETTINGS - DARK MODE
+========================================= */
+
+function loadTheme() {
+
+    const theme =
+        localStorage.getItem("theme");
+
+
+    if (theme === "dark") {
+
+        document.body.classList.add(
+            "dark-mode"
+        );
+
+    }
+
+}
+
+
+function toggleTheme() {
+
+    document.body.classList.toggle(
+        "dark-mode"
+    );
+
+
+    if (
+        document.body.classList.contains(
+            "dark-mode"
+        )
+    ) {
+
+        localStorage.setItem(
+            "theme",
+            "dark"
+        );
+
+    }
+
+    else {
+
+        localStorage.setItem(
+            "theme",
+            "light"
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   9. RESET ALL DATA
+========================================= */
+
+function resetAllData() {
+
+    const confirmation =
+        confirm(
+            "Are you sure you want to delete all your StudyFlow data?"
+        );
+
+
+    if (!confirmation) return;
+
+
+    localStorage.removeItem(
+        "subjects"
+    );
+
+    localStorage.removeItem(
+        "assignments"
+    );
+
+    localStorage.removeItem(
+        "schedules"
+    );
+
+    localStorage.removeItem(
+        "goals"
+    );
+
+
+    subjects = [];
+
+    assignments = [];
+
+    schedules = [];
+
+    goals = [];
+
+
+    displaySubjects();
+
+    displayAssignments();
+
+    displaySchedules();
+
+    displayGoals();
+
+    updateDashboard();
+
+
+    alert(
+        "All StudyFlow data has been reset."
+    );
+
+}
+
+
+/* =========================================
+   10. AUTOMATICALLY LOAD DATA
+========================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        displaySubjects();
+
+        displayAssignments();
+
+        displaySchedules();
+
+        displayGoals();
+
+        updateDashboard();
+
+        loadTheme();
+
+    }
+);
+
+
+/* =========================================
+   11. FORM CONNECTIONS
+========================================= */
+
+
+/* SUBJECT FORM */
+
+const subjectForm =
+    document.getElementById(
+        "subjectForm"
+    );
+
+
+if (subjectForm) {
+
+    subjectForm.addEventListener(
+        "submit",
+        function (event) {
+
+            event.preventDefault();
+
+
+            const subjectInput =
+                document.getElementById(
+                    "subjectInput"
+                );
+
+
+            addSubject(
+                subjectInput.value
+            );
+
+
+            subjectInput.value = "";
+
+        }
+    );
+
+}
+
+
+/* ASSIGNMENT FORM */
+
+const assignmentForm =
+    document.getElementById(
+        "assignmentForm"
+    );
+
+
+if (assignmentForm) {
+
+    assignmentForm.addEventListener(
+        "submit",
+        function (event) {
+
+            event.preventDefault();
+
+
+            const title =
+                document.getElementById(
+                    "assignmentTitle"
+                ).value;
+
+
+            const subject =
+                document.getElementById(
+                    "assignmentSubject"
+                ).value;
+
+
+            const deadline =
+                document.getElementById(
+                    "assignmentDeadline"
+                ).value;
+
+
+            addAssignment(
+                title,
+                subject,
+                deadline
+            );
+
+
+            assignmentForm.reset();
+
+        }
+    );
+
+}
+
+
+/* SCHEDULE FORM */
+
+const scheduleForm =
+    document.getElementById(
+        "scheduleForm"
+    );
+
+
+if (scheduleForm) {
+
+    scheduleForm.addEventListener(
+        "submit",
+        function (event) {
+
+            event.preventDefault();
+
+
+            const subject =
+                document.getElementById(
+                    "scheduleSubject"
+                ).value;
+
+
+            const day =
+                document.getElementById(
+                    "scheduleDay"
+                ).value;
+
+
+            const time =
+                document.getElementById(
+                    "scheduleTime"
+                ).value;
+
+
+            addSchedule(
+                subject,
+                day,
+                time
+            );
+
+
+            scheduleForm.reset();
+
+        }
+    );
+
+}
+
+
+/* GOAL FORM */
+
+const goalForm =
+    document.getElementById(
+        "goalForm"
+    );
+
+
+if (goalForm) {
+
+    goalForm.addEventListener(
+        "submit",
+        function (event) {
+
+            event.preventDefault();
+
+
+            const goalInput =
+                document.getElementById(
+                    "goalInput"
+                );
+
+
+            addGoal(
+                goalInput.value
+            );
+
+
+            goalInput.value = "";
+
+        }
+    );
+
+}

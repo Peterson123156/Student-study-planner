@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Study Schedule | StudyFlow</title>
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVIGATION BAR
+    ========================== -->
+
+    <header>
+
+        <nav>
+
+            <a href="index.html" class="logo">
+                Study<span>Flow</span>
+            </a>
+
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+
+                <li>
+                    <a href="subjects.html">Subjects</a>
+                </li>
+
+                <li>
+                    <a href="schedule.html">Schedule</a>
+                </li>
+
+                <li>
+                    <a href="assignments.html">Assignments</a>
+                </li>
+
+                <li>
+                    <a href="goals.html">Goals</a>
+                </li>
+
+                <li>
+                    <a href="progress.html">Progress</a>
+                </li>
+
+            </ul>
+
+
+            <a href="schedule.html" class="nav-button">
+                My Schedule
+            </a>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="page-container">
+
+
+        <!-- PAGE HEADER -->
+
+        <section class="page-header">
+
+            <h1>
+                📅 Study Schedule
+            </h1>
+
+            <p>
+                Plan your study sessions and organize your time effectively.
+            </p>
+
+        </section>
+
+
+
+        <!-- =========================
+             ADD STUDY SESSION FORM
+        ========================== -->
+
+        <section class="form-card">
+
+            <h2>
+                Add a Study Session
+            </h2>
+
+
+            <form id="scheduleForm">
+
+
+                <!-- SUBJECT -->
+
+                <div class="form-group">
+
+                    <label for="scheduleSubject">
+                        Subject
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="scheduleSubject"
+                        placeholder="Example: Mathematics"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- DAY -->
+
+                <div class="form-group">
+
+                    <label for="scheduleDay">
+                        Day
+                    </label>
+
+
+                    <select
+                        id="scheduleDay"
+                        required
+                    >
+
+                        <option value="">
+                            Select a day
+                        </option>
+
+                        <option value="Monday">
+                            Monday
+                        </option>
+
+                        <option value="Tuesday">
+                            Tuesday
+                        </option>
+
+                        <option value="Wednesday">
+                            Wednesday
+                        </option>
+
+                        <option value="Thursday">
+                            Thursday
+                        </option>
+
+                        <option value="Friday">
+                            Friday
+                        </option>
+
+                        <option value="Saturday">
+                            Saturday
+                        </option>
+
+                        <option value="Sunday">
+                            Sunday
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- TIME -->
+
+                <div class="form-group">
+
+                    <label for="scheduleTime">
+                        Study Time
+                    </label>
+
+
+                    <input
+                        type="time"
+                        id="scheduleTime"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- SUBMIT BUTTON -->
+
+                <button
+                    type="submit"
+                    class="submit-btn"
+                >
+
+                    + Add Study Session
+
+                </button>
+
+
+            </form>
+
+        </section>
+
+
+
+        <!-- =========================
+             STUDY SCHEDULE LIST
+        ========================== -->
+
+        <section>
+
+
+            <div class="page-header">
+
+                <h2>
+                    My Study Sessions
+                </h2>
+
+                <p>
+                    View and manage all your planned study sessions.
+                </p>
+
+            </div>
+
+
+            <!-- JavaScript displays schedules here -->
+
+            <div
+                id="scheduleList"
+                class="schedule-list"
+            >
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =========================
+             STUDY TIPS
+        ========================== -->
+
+        <section
+            class="form-card"
+            style="margin-top: 50px;"
+        >
+
+            <h2>
+                💡 Study Tip
+            </h2>
+
+            <p
+                style="
+                    color: var(--text-light);
+                    margin-bottom: 25px;
+                "
+            >
+
+                Create realistic study sessions and give yourself
+                enough time to rest between subjects. Consistency is
+                often more effective than trying to study everything
+                at once.
+
+            </p>
+
+
+            <div class="hero-buttons">
+
+
+                <a
+                    href="subjects.html"
+                    class="secondary-button"
+                >
+
+                    ← Manage Subjects
+
+                </a>
+
+
+                <a
+                    href="assignments.html"
+                    class="primary-button"
+                >
+
+                    Manage Assignments →
+
+                </a>
+
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <div class="footer-container">
+
+
+            <!-- BRAND -->
+
+            <div class="footer-brand">
+
+                <h3>
+                    Study<span>Flow</span>
+                </h3>
+
+                <p>
+                    Organize your studies, manage your time,
+                    and stay focused on your academic goals.
+                </p>
+
+            </div>
+
+
+
+            <!-- QUICK LINKS -->
+
+            <div class="footer-links">
+
+                <h4>
+                    Quick Links
+                </h4>
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="subjects.html">
+                    Subjects
+                </a>
+
+                <a href="assignments.html">
+                    Assignments
+                </a>
+
+                <a href="goals.html">
+                    Goals
+                </a>
+
+                <a href="progress.html">
+                    Progress
+                </a>
+
+                <a href="settings.html">
+                    Settings
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- COPYRIGHT -->
+
+        <div class="copyright">
+
+            © 2026 StudyFlow. Student Study Planner.
+
+        </div>
+
+
+    </footer>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script src="js/app.js"></script>
+
+
+</body>
+
+</html>

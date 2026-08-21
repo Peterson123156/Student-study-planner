@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Goals | StudyFlow</title>
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVIGATION BAR
+    ========================== -->
+
+    <header>
+
+        <nav>
+
+            <!-- WEBSITE LOGO -->
+
+            <a href="index.html" class="logo">
+                Study<span>Flow</span>
+            </a>
+
+
+            <!-- NAVIGATION LINKS -->
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="index.html">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="subjects.html">
+                        Subjects
+                    </a>
+                </li>
+
+                <li>
+                    <a href="schedule.html">
+                        Schedule
+                    </a>
+                </li>
+
+                <li>
+                    <a href="assignments.html">
+                        Assignments
+                    </a>
+                </li>
+
+                <li>
+                    <a href="goals.html">
+                        Goals
+                    </a>
+                </li>
+
+                <li>
+                    <a href="progress.html">
+                        Progress
+                    </a>
+                </li>
+
+            </ul>
+
+
+            <!-- QUICK BUTTON -->
+
+            <a href="goals.html" class="nav-button">
+                My Goals
+            </a>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="page-container">
+
+
+        <!-- PAGE HEADER -->
+
+        <section class="page-header">
+
+            <h1>
+                🎯 My Goals
+            </h1>
+
+            <p>
+                Set academic goals, track your progress, and stay motivated throughout your learning journey.
+            </p>
+
+        </section>
+
+
+
+        <!-- =========================
+             ADD GOAL FORM
+        ========================== -->
+
+        <section class="form-card">
+
+            <h2>
+                Create a New Goal
+            </h2>
+
+
+            <form id="goalForm">
+
+
+                <div class="form-group">
+
+                    <label for="goalInput">
+                        Goal
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="goalInput"
+                        placeholder="Example: Improve my Mathematics grade"
+                        autocomplete="off"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="submit-btn"
+                >
+
+                    + Add Goal
+
+                </button>
+
+
+            </form>
+
+        </section>
+
+
+
+        <!-- =========================
+             GOALS LIST
+        ========================== -->
+
+        <section>
+
+
+            <div class="page-header">
+
+                <h2>
+                    Your Academic Goals
+                </h2>
+
+                <p>
+                    Update each goal using the progress slider and monitor how close you are to completing it.
+                </p>
+
+            </div>
+
+
+            <!--
+                JavaScript automatically
+                displays all goals here
+            -->
+
+            <div
+                id="goalList"
+                class="goal-list"
+            >
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =========================
+             MOTIVATION SECTION
+        ========================== -->
+
+        <section
+            class="form-card"
+            style="margin-top: 50px;"
+        >
+
+            <h2>
+                💡 Stay Focused
+            </h2>
+
+            <p
+                style="
+                    color: var(--text-light);
+                    margin-bottom: 25px;
+                "
+            >
+
+                Big academic achievements are built through small,
+                consistent steps. Set realistic goals, monitor your
+                progress, and keep moving forward.
+
+            </p>
+
+
+            <div class="hero-buttons">
+
+
+                <a
+                    href="assignments.html"
+                    class="secondary-button"
+                >
+
+                    ← Manage Assignments
+
+                </a>
+
+
+                <a
+                    href="progress.html"
+                    class="primary-button"
+                >
+
+                    View My Progress →
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <div class="footer-container">
+
+
+            <!-- FOOTER BRAND -->
+
+            <div class="footer-brand">
+
+                <h3>
+                    Study<span>Flow</span>
+                </h3>
+
+
+                <p>
+                    A simple and modern student study planner
+                    designed to help you organize, focus,
+                    and achieve your academic goals.
+                </p>
+
+            </div>
+
+
+
+            <!-- FOOTER LINKS -->
+
+            <div class="footer-links">
+
+                <h4>
+                    Study Planner
+                </h4>
+
+
+                <a href="index.html">
+                    Home
+                </a>
+
+
+                <a href="subjects.html">
+                    Subjects
+                </a>
+
+
+                <a href="schedule.html">
+                    Study Schedule
+                </a>
+
+
+                <a href="assignments.html">
+                    Assignments
+                </a>
+
+
+                <a href="progress.html">
+                    Progress
+                </a>
+
+
+                <a href="settings.html">
+                    Settings
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- COPYRIGHT -->
+
+        <div class="copyright">
+
+            © 2026 StudyFlow. Student Study Planner.
+
+        </div>
+
+
+    </footer>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script src="js/app.js"></script>
+
+
+</body>
+
+</html>
