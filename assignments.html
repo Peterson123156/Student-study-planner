@@ -3,16 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Assignments | StudyFlow</title>
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
-
 </head>
-
 
 <body>
 
@@ -21,52 +17,36 @@
     ========================== -->
 
     <header>
-
-        <nav>
-
+        <nav class="container">
             <a href="index.html" class="logo">
                 Study<span>Flow</span>
             </a>
 
-
             <ul class="nav-links">
-
-                <li>
-                    <a href="index.html">Home</a>
-                </li>
-
-                <li>
-                    <a href="subjects.html">Subjects</a>
-                </li>
-
-                <li>
-                    <a href="schedule.html">Schedule</a>
-                </li>
-
-                <li>
-                    <a href="assignments.html">Assignments</a>
-                </li>
-
-                <li>
-                    <a href="goals.html">Goals</a>
-                </li>
-
-                <li>
-                    <a href="progress.html">Progress</a>
-                </li>
-
+                <li><a href="index.html">Home</a></li>
+                <li><a href="subjects.html">Subjects</a></li>
+                <li><a href="schedule.html">Schedule</a></li>
+                <li><a href="assignments.html">Assignments</a></li>
+                <li><a href="goals.html">Goals</a></li>
+                <li><a href="progress.html">Progress</a></li>
             </ul>
 
-
-            <a href="assignments.html" class="nav-button">
+            <a href="assignments.html" class="btn-auth">
                 My Assignments
             </a>
 
+            <!-- AUTHENTICATION CONTAINER -->
+            <div id="auth-container">
+                <button id="btn-login" class="btn-auth">Sign In with Google</button>
+
+                <div id="user-profile" class="user-profile hidden">
+                    <img id="user-avatar" class="user-avatar" src="" alt="Avatar">
+                    <span id="user-name" class="user-name"></span>
+                    <button id="btn-logout" class="btn-logout">Sign Out</button>
+                </div>
+            </div>
         </nav>
-
     </header>
-
-
 
     <!-- =========================
          MAIN CONTENT
@@ -74,45 +54,23 @@
 
     <main class="page-container">
 
-
         <!-- PAGE HEADER -->
-
         <section class="page-header">
-
-            <h1>
-                📝 My Assignments
-            </h1>
-
-            <p>
-                Keep track of your assignments, subjects, and deadlines in one place.
-            </p>
-
+            <h1>📝 My Assignments</h1>
+            <p>Keep track of your assignments, subjects, and deadlines in one place.</p>
         </section>
-
-
 
         <!-- =========================
              ADD ASSIGNMENT FORM
         ========================== -->
 
         <section class="form-card">
-
-            <h2>
-                Add a New Assignment
-            </h2>
-
+            <h2>Add a New Assignment</h2>
 
             <form id="assignmentForm">
-
-
                 <!-- ASSIGNMENT TITLE -->
-
                 <div class="form-group">
-
-                    <label for="assignmentTitle">
-                        Assignment Title
-                    </label>
-
+                    <label for="assignmentTitle">Assignment Title</label>
                     <input
                         type="text"
                         id="assignmentTitle"
@@ -120,19 +78,11 @@
                         autocomplete="off"
                         required
                     >
-
                 </div>
 
-
-
                 <!-- SUBJECT -->
-
                 <div class="form-group">
-
-                    <label for="assignmentSubject">
-                        Subject
-                    </label>
-
+                    <label for="assignmentSubject">Subject</label>
                     <input
                         type="text"
                         id="assignmentSubject"
@@ -140,209 +90,94 @@
                         autocomplete="off"
                         required
                     >
-
                 </div>
 
-
-
                 <!-- DEADLINE -->
-
                 <div class="form-group">
-
-                    <label for="assignmentDeadline">
-                        Deadline
-                    </label>
-
+                    <label for="assignmentDeadline">Deadline</label>
                     <input
                         type="date"
                         id="assignmentDeadline"
                         required
                     >
-
                 </div>
 
-
-
                 <!-- SUBMIT BUTTON -->
-
                 <button
                     type="submit"
-                    class="submit-btn"
+                    class="primary-button"
+                    style="width: 100%; border: none;"
                 >
-
                     + Add Assignment
-
                 </button>
-
-
             </form>
-
         </section>
-
-
 
         <!-- =========================
              ASSIGNMENT LIST
         ========================== -->
 
         <section>
-
             <div class="page-header">
-
-                <h2>
-                    Your Assignments
-                </h2>
-
-                <p>
-                    Mark completed assignments and delete assignments you no longer need.
-                </p>
-
+                <h2>Your Assignments</h2>
+                <p>Mark completed assignments and delete assignments you no longer need.</p>
             </div>
-
 
             <!-- JavaScript displays assignments here -->
-
-            <div
-                id="assignmentList"
-                class="assignment-list"
-            >
-
-            </div>
-
+            <div id="assignmentList" class="assignment-list"></div>
         </section>
-
-
 
         <!-- =========================
              QUICK NAVIGATION
         ========================== -->
 
-        <section
-            class="form-card"
-            style="margin-top: 50px;"
-        >
-
-            <h2>
-                Stay on Track
-            </h2>
-
-            <p
-                style="
-                    color: var(--text-light);
-                    margin-bottom: 25px;
-                "
-            >
-                After managing your assignments, you can set academic goals
-                and monitor your overall progress.
+        <section class="form-card" style="margin-top: 50px;">
+            <h2>Stay on Track</h2>
+            <p style="color: var(--text-light); margin-bottom: 25px;">
+                After managing your assignments, you can set academic goals and monitor your overall progress.
             </p>
 
-
             <div class="hero-buttons">
-
-                <a
-                    href="schedule.html"
-                    class="secondary-button"
-                >
-                    ← Study Schedule
-                </a>
-
-
-                <a
-                    href="goals.html"
-                    class="primary-button"
-                >
-                    Set Your Goals →
-                </a>
-
+                <a href="schedule.html" class="secondary-button">← Study Schedule</a>
+                <a href="goals.html" class="primary-button">Set Your Goals →</a>
             </div>
-
         </section>
 
-
     </main>
-
-
 
     <!-- =========================
          FOOTER
     ========================== -->
 
     <footer>
-
         <div class="footer-container">
-
-
-            <!-- FOOTER BRAND -->
-
             <div class="footer-brand">
-
-                <h3>
-                    Study<span>Flow</span>
-                </h3>
-
-                <p>
-                    Plan your studies, manage assignments,
-                    and stay focused on your academic goals.
-                </p>
-
+                <h3>Study<span>Flow</span></h3>
+                <p>Plan your studies, manage assignments, and stay focused on your academic goals.</p>
             </div>
-
-
-
-            <!-- QUICK LINKS -->
 
             <div class="footer-links">
-
-                <h4>
-                    Quick Links
-                </h4>
-
-                <a href="index.html">
-                    Home
-                </a>
-
-                <a href="subjects.html">
-                    Subjects
-                </a>
-
-                <a href="schedule.html">
-                    Study Schedule
-                </a>
-
-                <a href="goals.html">
-                    Goals
-                </a>
-
-                <a href="progress.html">
-                    Progress
-                </a>
-
-                <a href="settings.html">
-                    Settings
-                </a>
-
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="subjects.html">Subjects</a>
+                <a href="schedule.html">Study Schedule</a>
+                <a href="goals.html">Goals</a>
+                <a href="progress.html">Progress</a>
+                <a href="settings.html">Settings</a>
             </div>
-
-
         </div>
-
 
         <div class="copyright">
-
             © 2026 StudyFlow. Student Study Planner.
-
         </div>
-
     </footer>
-
-
 
     <!-- =========================
          JAVASCRIPT
     ========================== -->
 
     <script src="js/app.js"></script>
-
+    <script type="module" src="./auth.js"></script>
 
 </body>
 

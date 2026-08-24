@@ -3,89 +3,53 @@
 
 <head>
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Subjects | StudyFlow</title>
 
     <!-- Main CSS File -->
     <link rel="stylesheet" href="css/style.css">
-
 </head>
 
-
 <body>
-
 
     <!-- =========================
          NAVIGATION BAR
     ========================== -->
 
     <header>
-
-        <nav>
-
+        <nav class="container">
             <!-- WEBSITE LOGO -->
-
             <a href="index.html" class="logo">
                 Study<span>Flow</span>
             </a>
 
-
             <!-- NAVIGATION LINKS -->
-
             <ul class="nav-links">
-
-                <li>
-                    <a href="index.html">
-                        Home
-                    </a>
-                </li>
-
-                <li>
-                    <a href="subjects.html">
-                        Subjects
-                    </a>
-                </li>
-
-                <li>
-                    <a href="schedule.html">
-                        Schedule
-                    </a>
-                </li>
-
-                <li>
-                    <a href="assignments.html">
-                        Assignments
-                    </a>
-                </li>
-
-                <li>
-                    <a href="goals.html">
-                        Goals
-                    </a>
-                </li>
-
-                <li>
-                    <a href="progress.html">
-                        Progress
-                    </a>
-                </li>
-
+                <li><a href="index.html">Home</a></li>
+                <li><a href="subjects.html">Subjects</a></li>
+                <li><a href="schedule.html">Schedule</a></li>
+                <li><a href="assignments.html">Assignments</a></li>
+                <li><a href="goals.html">Goals</a></li>
+                <li><a href="progress.html">Progress</a></li>
             </ul>
 
-
             <!-- QUICK ACTION BUTTON -->
-
-            <a href="subjects.html" class="nav-button">
+            <a href="subjects.html" class="btn-auth">
                 My Subjects
             </a>
 
+            <!-- AUTHENTICATION CONTAINER -->
+            <div id="auth-container">
+                <button id="btn-login" class="btn-auth">Sign In with Google</button>
+
+                <div id="user-profile" class="user-profile hidden">
+                    <img id="user-avatar" class="user-avatar" src="" alt="Avatar">
+                    <span id="user-name" class="user-name"></span>
+                    <button id="btn-logout" class="btn-logout">Sign Out</button>
+                </div>
+            </div>
         </nav>
-
     </header>
-
-
 
     <!-- =========================
          MAIN CONTENT
@@ -93,44 +57,22 @@
 
     <main class="page-container">
 
-
         <!-- PAGE HEADER -->
-
         <section class="page-header">
-
-            <h1>
-                📚 My Subjects
-            </h1>
-
-            <p>
-                Add and organize all the subjects you are currently studying.
-            </p>
-
+            <h1>📚 My Subjects</h1>
+            <p>Add and organize all the subjects you are currently studying.</p>
         </section>
-
-
 
         <!-- =========================
              ADD SUBJECT FORM
         ========================== -->
 
         <section class="form-card">
-
-            <h2>
-                Add a New Subject
-            </h2>
-
+            <h2>Add a New Subject</h2>
 
             <form id="subjectForm">
-
-
                 <div class="form-group">
-
-                    <label for="subjectInput">
-                        Subject Name
-                    </label>
-
-
+                    <label for="subjectInput">Subject Name</label>
                     <input
                         type="text"
                         id="subjectInput"
@@ -138,213 +80,96 @@
                         autocomplete="off"
                         required
                     >
-
                 </div>
-
 
                 <button
                     type="submit"
-                    class="submit-btn"
+                    class="primary-button"
+                    style="width: 100%; border: none;"
                 >
-
                     + Add Subject
-
                 </button>
-
-
             </form>
-
         </section>
-
-
 
         <!-- =========================
              SUBJECT LIST
         ========================== -->
 
         <section>
-
-
             <div class="page-header">
-
-                <h2>
-                    Your Subjects
-                </h2>
-
-                <p>
-                    Manage the subjects you have added to your study planner.
-                </p>
-
+                <h2>Your Subjects</h2>
+                <p>Manage the subjects you have added to your study planner.</p>
             </div>
 
-
-            <!--
-                JavaScript will automatically
-                display subjects here
-            -->
-
-            <div
-                id="subjectList"
-                class="subject-list"
-            >
-
-            </div>
-
-
+            <!-- JavaScript will automatically display subjects here -->
+            <div id="subjectList" class="subject-list"></div>
         </section>
-
-
 
         <!-- =========================
              QUICK NAVIGATION
         ========================== -->
 
-        <section
-            class="form-card"
-            style="margin-top: 50px;"
-        >
-
-            <h2>
-                What's Next?
-            </h2>
-
-            <p
-                style="
-                    color: var(--text-light);
-                    margin-bottom: 25px;
-                "
-            >
-
+        <section class="form-card" style="margin-top: 50px;">
+            <h2>What's Next?</h2>
+            <p style="color: var(--text-light); margin-bottom: 25px;">
                 After adding your subjects, create a study schedule
                 and start planning your study sessions.
-
             </p>
 
-
             <div class="hero-buttons">
-
-
-                <a
-                    href="schedule.html"
-                    class="primary-button"
-                >
-
+                <a href="schedule.html" class="primary-button">
                     Create Study Schedule →
-
                 </a>
-
-
-                <a
-                    href="assignments.html"
-                    class="secondary-button"
-                >
-
+                <a href="assignments.html" class="secondary-button">
                     Manage Assignments
-
                 </a>
-
-
             </div>
-
         </section>
 
-
     </main>
-
-
 
     <!-- =========================
          FOOTER
     ========================== -->
 
     <footer>
-
         <div class="footer-container">
-
-
             <!-- FOOTER BRAND -->
-
             <div class="footer-brand">
-
-                <h3>
-                    Study<span>Flow</span>
-                </h3>
-
-
+                <h3>Study<span>Flow</span></h3>
                 <p>
                     A simple and modern student study planner
                     designed to help you stay organized,
                     productive, and focused.
                 </p>
-
             </div>
-
-
 
             <!-- FOOTER LINKS -->
-
             <div class="footer-links">
-
-                <h4>
-                    Study Planner
-                </h4>
-
-
-                <a href="subjects.html">
-                    Subjects
-                </a>
-
-
-                <a href="schedule.html">
-                    Study Schedule
-                </a>
-
-
-                <a href="assignments.html">
-                    Assignments
-                </a>
-
-
-                <a href="goals.html">
-                    Goals
-                </a>
-
-
-                <a href="progress.html">
-                    Progress
-                </a>
-
-
-                <a href="settings.html">
-                    Settings
-                </a>
-
+                <h4>Study Planner</h4>
+                <a href="subjects.html">Subjects</a>
+                <a href="schedule.html">Study Schedule</a>
+                <a href="assignments.html">Assignments</a>
+                <a href="goals.html">Goals</a>
+                <a href="progress.html">Progress</a>
+                <a href="settings.html">Settings</a>
             </div>
-
-
         </div>
-
-
 
         <!-- COPYRIGHT -->
-
         <div class="copyright">
-
             © 2026 StudyFlow. All rights reserved.
-
         </div>
-
-
     </footer>
-
-
 
     <!-- =========================
          JAVASCRIPT
     ========================== -->
 
     <script src="js/app.js"></script>
-
+    <!-- Firebase Auth Module -->
+    <script type="module" src="./auth.js"></script>
 
 </body>
 

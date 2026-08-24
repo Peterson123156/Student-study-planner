@@ -3,71 +3,50 @@
 
 <head>
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Progress | StudyFlow</title>
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
-
 </head>
 
-
 <body>
-
 
     <!-- =========================
          NAVIGATION BAR
     ========================== -->
 
     <header>
-
-        <nav>
-
+        <nav class="container">
             <a href="index.html" class="logo">
                 Study<span>Flow</span>
             </a>
 
-
             <ul class="nav-links">
-
-                <li>
-                    <a href="index.html">Home</a>
-                </li>
-
-                <li>
-                    <a href="subjects.html">Subjects</a>
-                </li>
-
-                <li>
-                    <a href="schedule.html">Schedule</a>
-                </li>
-
-                <li>
-                    <a href="assignments.html">Assignments</a>
-                </li>
-
-                <li>
-                    <a href="goals.html">Goals</a>
-                </li>
-
-                <li>
-                    <a href="progress.html">Progress</a>
-                </li>
-
+                <li><a href="index.html">Home</a></li>
+                <li><a href="subjects.html">Subjects</a></li>
+                <li><a href="schedule.html">Schedule</a></li>
+                <li><a href="assignments.html">Assignments</a></li>
+                <li><a href="goals.html">Goals</a></li>
+                <li><a href="progress.html">Progress</a></li>
             </ul>
 
-
-            <a href="progress.html" class="nav-button">
+            <a href="progress.html" class="btn-auth">
                 My Progress
             </a>
 
+            <!-- AUTHENTICATION CONTAINER -->
+            <div id="auth-container">
+                <button id="btn-login" class="btn-auth">Sign In with Google</button>
+
+                <div id="user-profile" class="user-profile hidden">
+                    <img id="user-avatar" class="user-avatar" src="" alt="Avatar">
+                    <span id="user-name" class="user-name"></span>
+                    <button id="btn-logout" class="btn-logout">Sign Out</button>
+                </div>
+            </div>
         </nav>
-
     </header>
-
-
 
     <!-- =========================
          MAIN CONTENT
@@ -75,395 +54,154 @@
 
     <main class="page-container">
 
-
         <!-- PAGE HEADER -->
-
         <section class="page-header">
-
-            <h1>
-                📊 My Progress
-            </h1>
-
-            <p>
-                Monitor your study activity and see how much progress you are making.
-            </p>
-
+            <h1>📊 My Progress</h1>
+            <p>Monitor your study activity and see how much progress you are making.</p>
         </section>
-
-
 
         <!-- =========================
              PROGRESS STATISTICS
         ========================== -->
 
         <section class="dashboard-grid">
-
-
             <!-- TOTAL SUBJECTS -->
-
             <div class="dashboard-card">
-
-                <h3>
-                    📚 Total Subjects
-                </h3>
-
-                <h2 id="subjectCount">
-                    0
-                </h2>
-
+                <h3>📚 Total Subjects</h3>
+                <h2 id="subjectCount">0</h2>
             </div>
-
-
 
             <!-- TOTAL ASSIGNMENTS -->
-
             <div class="dashboard-card">
-
-                <h3>
-                    📝 Total Assignments
-                </h3>
-
-                <h2 id="assignmentCount">
-                    0
-                </h2>
-
+                <h3>📝 Total Assignments</h3>
+                <h2 id="assignmentCount">0</h2>
             </div>
-
-
 
             <!-- COMPLETED ASSIGNMENTS -->
-
             <div class="dashboard-card">
-
-                <h3>
-                    ✅ Completed
-                </h3>
-
-                <h2 id="completedCount">
-                    0
-                </h2>
-
+                <h3>✅ Completed</h3>
+                <h2 id="completedCount">0</h2>
             </div>
-
-
 
             <!-- OVERALL PROGRESS -->
-
             <div class="dashboard-card">
-
-                <h3>
-                    📈 Overall Progress
-                </h3>
-
-                <h2 id="progressPercentage">
-                    0%
-                </h2>
-
+                <h3>📈 Overall Progress</h3>
+                <h2 id="progressPercentage">0%</h2>
             </div>
-
-
         </section>
-
-
 
         <!-- =========================
              OVERALL PROGRESS
         ========================== -->
 
         <section class="form-card">
-
-            <h2>
-                Overall Assignment Progress
-            </h2>
-
-            <p
-                style="
-                    color: var(--text-light);
-                    margin-bottom: 20px;
-                "
-            >
-
-                Your overall progress is calculated based on the number
-                of assignments you have completed.
-
+            <h2>Overall Assignment Progress</h2>
+            <p style="color: var(--text-light); margin-bottom: 20px;">
+                Your overall progress is calculated based on the number of assignments you have completed.
             </p>
-
 
             <!-- PROGRESS BAR -->
-
             <div class="progress-container">
-
-                <div
-                    id="overallProgressBar"
-                    class="progress-bar"
-                    style="width: 0%;"
-                >
-
-                </div>
-
+                <div id="overallProgressBar" class="progress-bar" style="width: 0%;"></div>
             </div>
 
-
-            <p
-                style="
-                    margin-top: 15px;
-                    color: var(--text-light);
-                "
-            >
-
+            <p style="margin-top: 15px; color: var(--text-light);">
                 Keep completing your assignments to improve your progress.
-
             </p>
-
         </section>
-
-
 
         <!-- =========================
              PROGRESS INFORMATION
         ========================== -->
 
         <section class="features">
-
             <div class="section-title">
-
-                <h2>
-                    Keep Moving Forward
-                </h2>
-
-                <p>
-                    Small and consistent efforts can help you make meaningful progress over time.
-                </p>
-
+                <h2>Keep Moving Forward</h2>
+                <p>Small and consistent efforts can help you make meaningful progress over time.</p>
             </div>
-
 
             <div class="features-grid">
-
-
                 <!-- CARD 1 -->
-
                 <div class="feature-card">
-
-                    <div class="feature-icon">
-                        📚
-                    </div>
-
-                    <h3>
-                        Add Subjects
-                    </h3>
-
-                    <p>
-                        Organize all the subjects you are studying
-                        and keep them in one place.
-                    </p>
-
+                    <div class="feature-icon">📚</div>
+                    <h3>Add Subjects</h3>
+                    <p>Organize all the subjects you are studying and keep them in one place.</p>
                     <br>
-
-                    <a
-                        href="subjects.html"
-                        class="secondary-button"
-                    >
-                        Manage Subjects
-                    </a>
-
+                    <a href="subjects.html" class="secondary-button">Manage Subjects</a>
                 </div>
-
-
 
                 <!-- CARD 2 -->
-
                 <div class="feature-card">
-
-                    <div class="feature-icon">
-                        📝
-                    </div>
-
-                    <h3>
-                        Complete Assignments
-                    </h3>
-
-                    <p>
-                        Keep track of your assignments and mark them
-                        as completed when you finish them.
-                    </p>
-
+                    <div class="feature-icon">📝</div>
+                    <h3>Complete Assignments</h3>
+                    <p>Keep track of your assignments and mark them as completed when you finish them.</p>
                     <br>
-
-                    <a
-                        href="assignments.html"
-                        class="primary-button"
-                    >
-                        View Assignments
-                    </a>
-
+                    <a href="assignments.html" class="primary-button">View Assignments</a>
                 </div>
-
-
 
                 <!-- CARD 3 -->
-
                 <div class="feature-card">
-
-                    <div class="feature-icon">
-                        🎯
-                    </div>
-
-                    <h3>
-                        Track Your Goals
-                    </h3>
-
-                    <p>
-                        Set academic goals and update your progress
-                        as you move closer to achieving them.
-                    </p>
-
+                    <div class="feature-icon">🎯</div>
+                    <h3>Track Your Goals</h3>
+                    <p>Set academic goals and update your progress as you move closer to achieving them.</p>
                     <br>
-
-                    <a
-                        href="goals.html"
-                        class="secondary-button"
-                    >
-                        View Goals
-                    </a>
-
+                    <a href="goals.html" class="secondary-button">View Goals</a>
                 </div>
-
-
             </div>
-
         </section>
-
-
 
         <!-- =========================
              QUICK NAVIGATION
         ========================== -->
 
         <section class="form-card">
-
-            <h2>
-                What Would You Like to Do Next?
-            </h2>
-
-            <p
-                style="
-                    color: var(--text-light);
-                    margin-bottom: 25px;
-                "
-            >
-
-                Continue organizing your studies and keep building
-                a consistent learning routine.
-
+            <h2>What Would You Like to Do Next?</h2>
+            <p style="color: var(--text-light); margin-bottom: 25px;">
+                Continue organizing your studies and keep building a consistent learning routine.
             </p>
 
-
             <div class="hero-buttons">
-
-
-                <a
-                    href="goals.html"
-                    class="secondary-button"
-                >
-                    ← My Goals
-                </a>
-
-
-                <a
-                    href="settings.html"
-                    class="primary-button"
-                >
-                    Settings →
-                </a>
-
+                <a href="goals.html" class="secondary-button">← My Goals</a>
+                <a href="settings.html" class="primary-button">Settings →</a>
             </div>
-
         </section>
 
-
     </main>
-
-
 
     <!-- =========================
          FOOTER
     ========================== -->
 
     <footer>
-
         <div class="footer-container">
-
-
             <div class="footer-brand">
-
-                <h3>
-                    Study<span>Flow</span>
-                </h3>
-
-                <p>
-                    A simple and modern study planner designed to help
-                    students organize their studies and track their progress.
-                </p>
-
+                <h3>Study<span>Flow</span></h3>
+                <p>A simple and modern study planner designed to help students organize their studies and track their progress.</p>
             </div>
-
-
 
             <div class="footer-links">
-
-                <h4>
-                    Quick Links
-                </h4>
-
-                <a href="index.html">
-                    Home
-                </a>
-
-                <a href="subjects.html">
-                    Subjects
-                </a>
-
-                <a href="schedule.html">
-                    Study Schedule
-                </a>
-
-                <a href="assignments.html">
-                    Assignments
-                </a>
-
-                <a href="goals.html">
-                    Goals
-                </a>
-
-                <a href="settings.html">
-                    Settings
-                </a>
-
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="subjects.html">Subjects</a>
+                <a href="schedule.html">Study Schedule</a>
+                <a href="assignments.html">Assignments</a>
+                <a href="goals.html">Goals</a>
+                <a href="settings.html">Settings</a>
             </div>
-
-
         </div>
-
-
 
         <div class="copyright">
-
             © 2026 StudyFlow. Student Study Planner.
-
         </div>
-
-
     </footer>
-
-
 
     <!-- =========================
          JAVASCRIPT
     ========================== -->
 
     <script src="js/app.js"></script>
-
+    <!-- Firebase Auth Module -->
+    <script type="module" src="./auth.js"></script>
 
 </body>
 
