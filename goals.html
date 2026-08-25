@@ -6,168 +6,457 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Goals | StudyFlow</title>
 
-    <!-- Main CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Poppins:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎯</text></svg>">
+
+    <style>
+        :root {
+            --primary: #6366F1;
+            --primary-hover: #4F46E5;
+            --bg: #0F172A;
+            --surface: #1E293B;
+            --surface-card: #334155;
+            --text: #F8FAFC;
+            --text-muted: #94A3B8;
+            --border: #334155;
+            --accent: #10B981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Utility */
+        .hidden {
+            display: none !important;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Navigation */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.35rem;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text);
+        }
+
+        /* Auth State UI */
+        .btn-auth {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-auth:hover {
+            background: var(--primary-hover);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--surface);
+            padding: 0.35rem 0.85rem 0.35rem 0.4rem;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .user-name {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .btn-logout {
+            background: transparent;
+            color: var(--text-muted);
+            border: none;
+            font-size: 0.8rem;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-left: 0.25rem;
+        }
+
+        .btn-logout:hover {
+            color: #EF4444;
+        }
+
+        /* Page Layout */
+        .page-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        .page-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .page-header h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        /* Forms & Cards */
+        .form-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.75rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .form-card h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.95rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Buttons */
+        .primary-button {
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+            transition: 0.2s;
+            border: none;
+        }
+
+        .primary-button:hover {
+            background: var(--primary-hover);
+        }
+
+        .secondary-button {
+            background: var(--surface-card);
+            color: var(--text);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid var(--border);
+        }
+
+        .secondary-button:hover {
+            background: var(--border);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .goal-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 2.5rem 0;
+            color: var(--text-muted);
+            text-align: center;
+            font-size: 0.9rem;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- =========================
-         NAVIGATION BAR
-    ========================== -->
-
+    <!-- Navigation -->
     <header>
-        <nav class="container">
-            <!-- WEBSITE LOGO -->
-            <a href="index.html" class="logo">
-                Study<span>Flow</span>
-            </a>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">Study<span>Flow</span></a>
 
-            <!-- NAVIGATION LINKS -->
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="subjects.html">Subjects</a></li>
-                <li><a href="schedule.html">Schedule</a></li>
-                <li><a href="assignments.html">Assignments</a></li>
-                <li><a href="goals.html">Goals</a></li>
-                <li><a href="progress.html">Progress</a></li>
-            </ul>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="subjects.html">Subjects</a></li>
+                    <li><a href="schedule.html">Schedule</a></li>
+                    <li><a href="assignments.html">Assignments</a></li>
+                    <li><a href="goals.html" class="active">Goals</a></li>
+                    <li><a href="progress.html">Progress</a></li>
+                </ul>
 
-            <!-- QUICK BUTTON -->
-            <a href="goals.html" class="btn-auth">
-                My Goals
-            </a>
+                <!-- Standard Auth Header Component -->
+                <div id="auth-container">
+                    <button id="btn-login" class="btn-auth">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.761H12.545z" />
+                        </svg>
+                        Sign In with Google
+                    </button>
 
-            <!-- AUTHENTICATION CONTAINER -->
-            <div id="auth-container">
-                <button id="btn-login" class="btn-auth">Sign In with Google</button>
-
-                <div id="user-profile" class="user-profile hidden">
-                    <img id="user-avatar" class="user-avatar" src="" alt="Avatar">
-                    <span id="user-name" class="user-name"></span>
-                    <button id="btn-logout" class="btn-logout">Sign Out</button>
+                    <div id="user-profile" class="user-profile hidden">
+                        <img id="user-avatar" class="user-avatar" src="" alt="Avatar">
+                        <span id="user-name" class="user-name"></span>
+                        <button id="btn-logout" class="btn-logout">Sign Out</button>
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </div>
     </header>
 
-    <!-- =========================
-         MAIN CONTENT
-    ========================== -->
-
+    <!-- Main Content -->
     <main class="page-container">
-
-        <!-- PAGE HEADER -->
         <section class="page-header">
-            <h1>🎯 My Goals</h1>
-            <p>Set academic goals, track your progress, and stay motivated throughout your learning journey.</p>
+            <h1>🎯 Academic Goals</h1>
+            <p>Define targets, track your milestones, and build consistent study habits.</p>
         </section>
 
-        <!-- =========================
-             ADD GOAL FORM
-        ========================== -->
-
+        <!-- Create Goal Form -->
         <section class="form-card">
-            <h2>Create a New Goal</h2>
-
+            <h2>Set a New Goal</h2>
             <form id="goalForm">
                 <div class="form-group">
-                    <label for="goalInput">Goal</label>
-                    <input
-                        type="text"
-                        id="goalInput"
-                        placeholder="Example: Improve my Mathematics grade"
-                        autocomplete="off"
-                        required
-                    >
+                    <label for="goalTitle">Goal Description</label>
+                    <input type="text" id="goalTitle"
+                        placeholder="Example: Complete 10 hours of Physics study this week" autocomplete="off" required>
                 </div>
 
-                <button
-                    type="submit"
-                    class="primary-button"
-                    style="width: 100%; border: none;"
-                >
-                    + Add Goal
-                </button>
+                <div class="form-group">
+                    <label for="goalCategory">Category</label>
+                    <select id="goalCategory" required>
+                        <option value="Study Hours">Study Hours</option>
+                        <option value="Assignment Completion">Assignment Completion</option>
+                        <option value="Exam Preparation">Exam Preparation</option>
+                        <option value="Personal Growth">Personal Growth</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="goalTargetDate">Target Completion Date</label>
+                    <input type="date" id="goalTargetDate" required>
+                </div>
+
+                <button type="submit" class="primary-button" style="width: 100%;">+ Create Goal</button>
             </form>
         </section>
 
-        <!-- =========================
-             GOALS LIST
-        ========================== -->
-
+        <!-- Goals List Display -->
         <section>
-            <div class="page-header">
-                <h2>Your Academic Goals</h2>
-                <p>Update each goal using the progress slider and monitor how close you are to completing it.</p>
+            <div class="page-header" style="margin-bottom: 1.5rem;">
+                <h2 style="font-size: 1.5rem;">Active Goals</h2>
+                <p>Track your active goals and mark them off as you reach your milestones.</p>
             </div>
-
-            <!-- JavaScript automatically displays all goals here -->
             <div id="goalList" class="goal-list"></div>
         </section>
 
-        <!-- =========================
-             MOTIVATION SECTION
-        ========================== -->
-
-        <section class="form-card" style="margin-top: 50px;">
-            <h2>💡 Stay Focused</h2>
-            <p style="color: var(--text-light); margin-bottom: 25px;">
-                Big academic achievements are built through small,
-                consistent steps. Set realistic goals, monitor your
-                progress, and keep moving forward.
+        <!-- Navigation CTA Section -->
+        <section class="form-card" style="margin-top: 3rem;">
+            <h2>Track Your Progress</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                View your complete completion rates and visual statistics on the progress overview screen.
             </p>
-
             <div class="hero-buttons">
-                <a href="assignments.html" class="secondary-button">← Manage Assignments</a>
-                <a href="progress.html" class="primary-button">View My Progress →</a>
+                <a href="assignments.html" class="secondary-button">← Assignments</a>
+                <a href="progress.html" class="primary-button">View Analytics →</a>
             </div>
         </section>
-
     </main>
 
-    <!-- =========================
-         FOOTER
-    ========================== -->
-
+    <!-- Footer -->
     <footer>
-        <div class="footer-container">
-            <!-- FOOTER BRAND -->
-            <div class="footer-brand">
-                <h3>Study<span>Flow</span></h3>
-                <p>
-                    A simple and modern student study planner
-                    designed to help you organize, focus,
-                    and achieve your academic goals.
-                </p>
-            </div>
-
-            <!-- FOOTER LINKS -->
-            <div class="footer-links">
-                <h4>Study Planner</h4>
-                <a href="index.html">Home</a>
-                <a href="subjects.html">Subjects</a>
-                <a href="schedule.html">Study Schedule</a>
-                <a href="assignments.html">Assignments</a>
-                <a href="progress.html">Progress</a>
-                <a href="settings.html">Settings</a>
-            </div>
-        </div>
-
-        <!-- COPYRIGHT -->
-        <div class="copyright">
-            © 2026 StudyFlow. Student Study Planner.
+        <div class="container">
+            <p>&copy; 2026 StudyFlow. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- =========================
-         JAVASCRIPT
-    ========================== -->
-
+    <!-- App Script -->
     <script src="js/app.js"></script>
-    <!-- Firebase Auth Module -->
-    <script type="module" src="./auth.js"></script>
 
+    <!-- Firebase Auth Module Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
+        import {
+            getAuth,
+            GoogleAuthProvider,
+            signInWithPopup,
+            signOut,
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDvbEQO1_moLrkYCYZrUpbtODXctXa-ss",
+            authDomain: "studyflow-8add1.firebaseapp.com",
+            projectId: "studyflow-8add1",
+            storageBucket: "studyflow-8add1.firebasestorage.app",
+            messagingSenderId: "809255887815",
+            appId: "1:809255887815:web:bbf697ee87cc0db6ce2fe2",
+            measurementId: "G-0E5HM4Y19D"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        const btnLogin = document.getElementById("btn-login");
+        const btnLogout = document.getElementById("btn-logout");
+        const userProfile = document.getElementById("user-profile");
+        const userName = document.getElementById("user-name");
+        const userAvatar = document.getElementById("user-avatar");
+
+        btnLogin?.addEventListener("click", async () => {
+            try {
+                await signInWithPopup(auth, provider);
+            } catch (error) {
+                console.error("Sign-in error:", error.message);
+            }
+        });
+
+        btnLogout?.addEventListener("click", async () => {
+            try {
+                await signOut(auth);
+            } catch (error) {
+                console.error("Sign-out error:", error.message);
+            }
+        });
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                userAvatar.src = user.photoURL || "https://via.placeholder.com/32";
+                userName.textContent = user.displayName || user.email;
+                btnLogin.classList.add("hidden");
+                userProfile.classList.remove("hidden");
+            } else {
+                userAvatar.src = "";
+                userName.textContent = "";
+                userProfile.classList.add("hidden");
+                btnLogin.classList.remove("hidden");
+            }
+        });
+    </script>
 </body>
 
 </html>

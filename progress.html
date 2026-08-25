@@ -4,205 +4,516 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Progress | StudyFlow</title>
+    <title>Progress Analytics | StudyFlow</title>
 
-    <!-- Main CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Poppins:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
+
+    <style>
+        :root {
+            --primary: #6366F1;
+            --primary-hover: #4F46E5;
+            --bg: #0F172A;
+            --surface: #1E293B;
+            --surface-card: #334155;
+            --text: #F8FAFC;
+            --text-muted: #94A3B8;
+            --border: #334155;
+            --accent: #10B981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Utility */
+        .hidden {
+            display: none !important;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Navigation */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.35rem;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text);
+        }
+
+        /* Auth State UI */
+        .btn-auth {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-auth:hover {
+            background: var(--primary-hover);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--surface);
+            padding: 0.35rem 0.85rem 0.35rem 0.4rem;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .user-name {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .btn-logout {
+            background: transparent;
+            color: var(--text-muted);
+            border: none;
+            font-size: 0.8rem;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-left: 0.25rem;
+        }
+
+        .btn-logout:hover {
+            color: #EF4444;
+        }
+
+        /* Page Layout */
+        .page-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        .page-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .page-header h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        /* Metrics Overview Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 1.75rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 2.25rem;
+            color: var(--primary);
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Content Cards & Progress Bars */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .card h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.35rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .progress-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 10px;
+            background: var(--bg);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 20px;
+            transition: width 0.4s ease;
+        }
+
+        .progress-bar-fill.accent {
+            background: var(--accent);
+        }
+
+        /* Buttons & Actions */
+        .primary-button {
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+            transition: 0.2s;
+            border: none;
+        }
+
+        .primary-button:hover {
+            background: var(--primary-hover);
+        }
+
+        .secondary-button {
+            background: var(--surface-card);
+            color: var(--text);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid var(--border);
+        }
+
+        .secondary-button:hover {
+            background: var(--border);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 2.5rem 0;
+            color: var(--text-muted);
+            text-align: center;
+            font-size: 0.9rem;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- =========================
-         NAVIGATION BAR
-    ========================== -->
-
+    <!-- Navigation -->
     <header>
-        <nav class="container">
-            <a href="index.html" class="logo">
-                Study<span>Flow</span>
-            </a>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">Study<span>Flow</span></a>
 
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="subjects.html">Subjects</a></li>
-                <li><a href="schedule.html">Schedule</a></li>
-                <li><a href="assignments.html">Assignments</a></li>
-                <li><a href="goals.html">Goals</a></li>
-                <li><a href="progress.html">Progress</a></li>
-            </ul>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="subjects.html">Subjects</a></li>
+                    <li><a href="schedule.html">Schedule</a></li>
+                    <li><a href="assignments.html">Assignments</a></li>
+                    <li><a href="goals.html">Goals</a></li>
+                    <li><a href="progress.html" class="active">Progress</a></li>
+                </ul>
 
-            <a href="progress.html" class="btn-auth">
-                My Progress
-            </a>
+                <!-- Standard Auth Header Component -->
+                <div id="auth-container">
+                    <button id="btn-login" class="btn-auth">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.761H12.545z" />
+                        </svg>
+                        Sign In with Google
+                    </button>
 
-            <!-- AUTHENTICATION CONTAINER -->
-            <div id="auth-container">
-                <button id="btn-login" class="btn-auth">Sign In with Google</button>
-
-                <div id="user-profile" class="user-profile hidden">
-                    <img id="user-avatar" class="user-avatar" src="" alt="Avatar">
-                    <span id="user-name" class="user-name"></span>
-                    <button id="btn-logout" class="btn-logout">Sign Out</button>
+                    <div id="user-profile" class="user-profile hidden">
+                        <img id="user-avatar" class="user-avatar" src="" alt="Avatar">
+                        <span id="user-name" class="user-name"></span>
+                        <button id="btn-logout" class="btn-logout">Sign Out</button>
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </div>
     </header>
 
-    <!-- =========================
-         MAIN CONTENT
-    ========================== -->
-
+    <!-- Main Content -->
     <main class="page-container">
-
-        <!-- PAGE HEADER -->
         <section class="page-header">
-            <h1>📊 My Progress</h1>
-            <p>Monitor your study activity and see how much progress you are making.</p>
+            <h1>📊 Progress Analytics</h1>
+            <p>Analyze overall study metrics, subject performance, and task completions.</p>
         </section>
 
-        <!-- =========================
-             PROGRESS STATISTICS
-        ========================== -->
-
-        <section class="dashboard-grid">
-            <!-- TOTAL SUBJECTS -->
-            <div class="dashboard-card">
-                <h3>📚 Total Subjects</h3>
-                <h2 id="subjectCount">0</h2>
+        <!-- Overview Statistics -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <h3>75%</h3>
+                <p>Overall Completion Rate</p>
             </div>
-
-            <!-- TOTAL ASSIGNMENTS -->
-            <div class="dashboard-card">
-                <h3>📝 Total Assignments</h3>
-                <h2 id="assignmentCount">0</h2>
+            <div class="stat-card">
+                <h3>24.5h</h3>
+                <p>Hours Studied This Week</p>
             </div>
-
-            <!-- COMPLETED ASSIGNMENTS -->
-            <div class="dashboard-card">
-                <h3>✅ Completed</h3>
-                <h2 id="completedCount">0</h2>
+            <div class="stat-card">
+                <h3>18 / 24</h3>
+                <p>Assignments Completed</p>
             </div>
-
-            <!-- OVERALL PROGRESS -->
-            <div class="dashboard-card">
-                <h3>📈 Overall Progress</h3>
-                <h2 id="progressPercentage">0%</h2>
+            <div class="stat-card">
+                <h3>4 / 5</h3>
+                <p>Goals Met</p>
             </div>
         </section>
 
-        <!-- =========================
-             OVERALL PROGRESS
-        ========================== -->
+        <!-- Subject Breakdown Section -->
+        <section class="card">
+            <h2>Subject Completion Breakdown</h2>
 
-        <section class="form-card">
-            <h2>Overall Assignment Progress</h2>
-            <p style="color: var(--text-light); margin-bottom: 20px;">
-                Your overall progress is calculated based on the number of assignments you have completed.
-            </p>
-
-            <!-- PROGRESS BAR -->
-            <div class="progress-container">
-                <div id="overallProgressBar" class="progress-bar" style="width: 0%;"></div>
-            </div>
-
-            <p style="margin-top: 15px; color: var(--text-light);">
-                Keep completing your assignments to improve your progress.
-            </p>
-        </section>
-
-        <!-- =========================
-             PROGRESS INFORMATION
-        ========================== -->
-
-        <section class="features">
-            <div class="section-title">
-                <h2>Keep Moving Forward</h2>
-                <p>Small and consistent efforts can help you make meaningful progress over time.</p>
-            </div>
-
-            <div class="features-grid">
-                <!-- CARD 1 -->
-                <div class="feature-card">
-                    <div class="feature-icon">📚</div>
-                    <h3>Add Subjects</h3>
-                    <p>Organize all the subjects you are studying and keep them in one place.</p>
-                    <br>
-                    <a href="subjects.html" class="secondary-button">Manage Subjects</a>
+            <div class="progress-item">
+                <div class="progress-info">
+                    <span>Mathematics</span>
+                    <span>85%</span>
                 </div>
-
-                <!-- CARD 2 -->
-                <div class="feature-card">
-                    <div class="feature-icon">📝</div>
-                    <h3>Complete Assignments</h3>
-                    <p>Keep track of your assignments and mark them as completed when you finish them.</p>
-                    <br>
-                    <a href="assignments.html" class="primary-button">View Assignments</a>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: 85%;"></div>
                 </div>
+            </div>
 
-                <!-- CARD 3 -->
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3>Track Your Goals</h3>
-                    <p>Set academic goals and update your progress as you move closer to achieving them.</p>
-                    <br>
-                    <a href="goals.html" class="secondary-button">View Goals</a>
+            <div class="progress-item">
+                <div class="progress-info">
+                    <span>English Literature</span>
+                    <span>90%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill accent" style="width: 90%;"></div>
+                </div>
+            </div>
+
+            <div class="progress-item">
+                <div class="progress-info">
+                    <span>Physics</span>
+                    <span>60%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: 60%;"></div>
+                </div>
+            </div>
+
+            <div class="progress-item">
+                <div class="progress-info">
+                    <span>Computer Science</span>
+                    <span>70%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill accent" style="width: 70%;"></div>
                 </div>
             </div>
         </section>
 
-        <!-- =========================
-             QUICK NAVIGATION
-        ========================== -->
-
-        <section class="form-card">
-            <h2>What Would You Like to Do Next?</h2>
-            <p style="color: var(--text-light); margin-bottom: 25px;">
-                Continue organizing your studies and keep building a consistent learning routine.
+        <!-- Navigation CTA Section -->
+        <section class="card">
+            <h2>Keep Improving Your Workflow</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.25rem;">
+                Adjust your daily routine or add new goals to increase your completion rate.
             </p>
-
-            <div class="hero-buttons">
-                <a href="goals.html" class="secondary-button">← My Goals</a>
-                <a href="settings.html" class="primary-button">Settings →</a>
+            <div class="action-buttons">
+                <a href="goals.html" class="secondary-button">← Review Goals</a>
+                <a href="schedule.html" class="primary-button">View Schedule →</a>
             </div>
         </section>
-
     </main>
 
-    <!-- =========================
-         FOOTER
-    ========================== -->
-
+    <!-- Footer -->
     <footer>
-        <div class="footer-container">
-            <div class="footer-brand">
-                <h3>Study<span>Flow</span></h3>
-                <p>A simple and modern study planner designed to help students organize their studies and track their progress.</p>
-            </div>
-
-            <div class="footer-links">
-                <h4>Quick Links</h4>
-                <a href="index.html">Home</a>
-                <a href="subjects.html">Subjects</a>
-                <a href="schedule.html">Study Schedule</a>
-                <a href="assignments.html">Assignments</a>
-                <a href="goals.html">Goals</a>
-                <a href="settings.html">Settings</a>
-            </div>
-        </div>
-
-        <div class="copyright">
-            © 2026 StudyFlow. Student Study Planner.
+        <div class="container">
+            <p>&copy; 2026 StudyFlow. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- =========================
-         JAVASCRIPT
-    ========================== -->
-
+    <!-- App Script -->
     <script src="js/app.js"></script>
-    <!-- Firebase Auth Module -->
-    <script type="module" src="./auth.js"></script>
 
+    <!-- Firebase Auth Module Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
+        import {
+            getAuth,
+            GoogleAuthProvider,
+            signInWithPopup,
+            signOut,
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDvbEQO1_moLrkYCYZrUpbtODXctXa-ss",
+            authDomain: "studyflow-8add1.firebaseapp.com",
+            projectId: "studyflow-8add1",
+            storageBucket: "studyflow-8add1.firebasestorage.app",
+            messagingSenderId: "809255887815",
+            appId: "1:809255887815:web:bbf697ee87cc0db6ce2fe2",
+            measurementId: "G-0E5HM4Y19D"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        const btnLogin = document.getElementById("btn-login");
+        const btnLogout = document.getElementById("btn-logout");
+        const userProfile = document.getElementById("user-profile");
+        const userName = document.getElementById("user-name");
+        const userAvatar = document.getElementById("user-avatar");
+
+        btnLogin?.addEventListener("click", async () => {
+            try {
+                await signInWithPopup(auth, provider);
+            } catch (error) {
+                console.error("Sign-in error:", error.message);
+            }
+        });
+
+        btnLogout?.addEventListener("click", async () => {
+            try {
+                await signOut(auth);
+            } catch (error) {
+                console.error("Sign-out error:", error.message);
+            }
+        });
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                userAvatar.src = user.photoURL || "https://via.placeholder.com/32";
+                userName.textContent = user.displayName || user.email;
+                btnLogin.classList.add("hidden");
+                userProfile.classList.remove("hidden");
+            } else {
+                userAvatar.src = "";
+                userName.textContent = "";
+                userProfile.classList.add("hidden");
+                btnLogin.classList.remove("hidden");
+            }
+        });
+    </script>
 </body>
 
 </html>
