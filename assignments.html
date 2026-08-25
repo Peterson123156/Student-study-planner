@@ -18,6 +18,7 @@
         href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📝</text></svg>">
 
     <style>
+        /* Dark Mode CSS Variables */
         :root {
             --primary: #6366F1;
             --primary-hover: #4F46E5;
@@ -231,7 +232,7 @@
             border-color: var(--primary);
         }
 
-        /* Assignment Cards */
+        /* Assignment Items */
         .assignment-list {
             display: flex;
             flex-direction: column;
@@ -437,7 +438,7 @@
             </form>
         </section>
 
-        <!-- Assignments Firestore Stream List -->
+        <!-- Real-time Firestore Task List -->
         <section>
             <div class="page-header" style="margin-bottom: 1.5rem;">
                 <h2 style="font-size: 1.5rem;">Your Task List</h2>
@@ -457,15 +458,19 @@
         </div>
     </footer>
 
-    <!-- Firebase Operations -->
+    <!-- Firebase Auth & Firestore Module Logic -->
     <script type="module">
-        import { auth, db, provider } from "./js/firebase-config.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
         import {
+            getAuth,
+            GoogleAuthProvider,
             signInWithPopup,
             signOut,
             onAuthStateChanged
         } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
         import {
+            getFirestore,
             collection,
             addDoc,
             query,
@@ -477,7 +482,24 @@
             serverTimestamp
         } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-        // DOM Elements
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDvbEQO1_moLrkYCYZrUpbtODXctXa-ss",
+            authDomain: "studyflow-8add1.firebaseapp.com",
+            projectId: "studyflow-8add1",
+            storageBucket: "studyflow-8add1.firebasestorage.app",
+            messagingSenderId: "809255887815",
+            appId: "1:809255887815:web:bbf697ee87cc0db6ce2fe2",
+            measurementId: "G-0E5HM4Y19D"
+        };
+
+        // Initialize Firebase Services
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const provider = new GoogleAuthProvider();
+
+        // UI Elements
         const btnLogin = document.getElementById("btn-login");
         const btnLogout = document.getElementById("btn-logout");
         const userProfile = document.getElementById("user-profile");
@@ -506,6 +528,7 @@
             }
         });
 
+        // Auth State Monitoring
         onAuthStateChanged(auth, (user) => {
             currentUser = user;
             if (user) {
@@ -514,6 +537,7 @@
                 btnLogin.classList.add("hidden");
                 userProfile.classList.remove("hidden");
 
+                // Start Listening for User's Assignments
                 listenToAssignments(user.uid);
             } else {
                 userAvatar.src = "";
@@ -521,6 +545,7 @@
                 userProfile.classList.add("hidden");
                 btnLogin.classList.remove("hidden");
 
+                // Detach Firestore Listener & Clear UI on Sign Out
                 if (unsubscribeAssignments) unsubscribeAssignments();
                 assignmentList.innerHTML = `
           <div class="card empty-state">
@@ -558,7 +583,7 @@
             }
         });
 
-        // Real-Time Query Listener
+        // Real-Time Query Listener for Firestore
         function listenToAssignments(uid) {
             const q = query(
                 collection(db, "assignments"),
@@ -607,7 +632,7 @@
             });
         }
 
-        // Toggle & Delete Operations
+        // Toggle Status & Delete Document Actions
         function attachCardEventListeners() {
             document.querySelectorAll(".btn-toggle").forEach(button => {
                 button.addEventListener("click", async (e) => {
@@ -637,6 +662,7 @@
             });
         }
 
+        // Helper Utility for HTML Escaping
         function escapeHTML(str) {
             return str.replace(/[&<>'"]/g,
                 tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
