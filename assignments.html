@@ -15,7 +15,7 @@
 
     <!-- Favicon -->
     <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📝</text></svg>">
 
     <style>
         :root {
@@ -28,6 +28,7 @@
             --text-muted: #94A3B8;
             --border: #334155;
             --accent: #10B981;
+            --danger: #EF4444;
         }
 
         * {
@@ -154,12 +155,12 @@
         }
 
         .btn-logout:hover {
-            color: #EF4444;
+            color: var(--danger);
         }
 
         /* Page Layout */
         .page-container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 3rem 1.5rem;
         }
@@ -179,23 +180,29 @@
             font-size: 1.05rem;
         }
 
-        /* Forms & Cards */
-        .form-card {
+        /* Cards & Forms */
+        .card {
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 1.75rem;
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
         }
 
-        .form-card h2 {
+        .card h2 {
             font-family: 'Poppins', sans-serif;
             font-size: 1.25rem;
             margin-bottom: 1.25rem;
         }
 
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
         .form-group {
-            margin-bottom: 1.25rem;
+            margin-bottom: 1rem;
         }
 
         .form-group label {
@@ -206,7 +213,8 @@
             color: var(--text-muted);
         }
 
-        .form-group input {
+        .form-group input,
+        .form-group select {
             width: 100%;
             padding: 0.75rem 1rem;
             background: var(--bg);
@@ -217,9 +225,95 @@
             font-size: 0.95rem;
         }
 
-        .form-group input:focus {
+        .form-group input:focus,
+        .form-group select:focus {
             outline: none;
             border-color: var(--primary);
+        }
+
+        /* Assignment Cards */
+        .assignment-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .assignment-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: border-color 0.2s;
+        }
+
+        .assignment-card.completed {
+            opacity: 0.65;
+            border-color: var(--surface-card);
+        }
+
+        .assignment-card.completed .assignment-title {
+            text-decoration: line-through;
+        }
+
+        .assignment-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .assignment-meta {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-pending {
+            background: rgba(99, 102, 241, 0.2);
+            color: #818CF8;
+        }
+
+        .badge-completed {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--accent);
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .btn-action {
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-action:hover {
+            background: var(--border);
+        }
+
+        .btn-action.btn-delete:hover {
+            background: var(--danger);
+            color: white;
+            border-color: var(--danger);
         }
 
         /* Buttons */
@@ -240,33 +334,10 @@
             background: var(--primary-hover);
         }
 
-        .secondary-button {
-            background: var(--surface-card);
-            color: var(--text);
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 500;
-            text-decoration: none;
-            display: inline-block;
-            cursor: pointer;
-            transition: 0.2s;
-            border: 1px solid var(--border);
-        }
-
-        .secondary-button:hover {
-            background: var(--border);
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .assignment-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+        .empty-state {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 3rem 1rem;
         }
 
         /* Footer */
@@ -282,6 +353,17 @@
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
+            }
+
+            .assignment-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .card-actions {
+                width: 100%;
+                justify-content: flex-end;
             }
         }
     </style>
@@ -302,6 +384,7 @@
                     <li><a href="assignments.html" class="active">Assignments</a></li>
                     <li><a href="goals.html">Goals</a></li>
                     <li><a href="progress.html">Progress</a></li>
+                    <li><a href="settings.html">Settings</a></li>
                 </ul>
 
                 <!-- Standard Auth Header Component -->
@@ -327,53 +410,42 @@
     <!-- Main Content -->
     <main class="page-container">
         <section class="page-header">
-            <h1>📝 My Assignments</h1>
-            <p>Keep track of your assignments, subjects, and deadlines in one place.</p>
+            <h1>📝 Assignments</h1>
+            <p>Manage your upcoming tasks, set deadlines, and sync coursework with Firebase Firestore.</p>
         </section>
 
         <!-- Create Assignment Form -->
-        <section class="form-card">
-            <h2>Add a New Assignment</h2>
+        <section class="card">
+            <h2>Add New Assignment</h2>
             <form id="assignmentForm">
-                <div class="form-group">
-                    <label for="assignmentTitle">Assignment Title</label>
-                    <input type="text" id="assignmentTitle" placeholder="Example: Mathematics Homework"
-                        autocomplete="off" required>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="assignmentTitle">Assignment Title</label>
+                        <input type="text" id="assignmentTitle" placeholder="e.g., Chapter 4 Problem Set" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="assignmentSubject">Subject</label>
+                        <input type="text" id="assignmentSubject" placeholder="e.g., Physics" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dueDate">Due Date</label>
+                        <input type="date" id="dueDate" required>
+                    </div>
                 </div>
-
-                <div class="form-group">
-                    <label for="assignmentSubject">Subject</label>
-                    <input type="text" id="assignmentSubject" placeholder="Example: Mathematics" autocomplete="off"
-                        required>
-                </div>
-
-                <div class="form-group">
-                    <label for="assignmentDeadline">Deadline</label>
-                    <input type="date" id="assignmentDeadline" required>
-                </div>
-
-                <button type="submit" class="primary-button" style="width: 100%;">+ Add Assignment</button>
+                <button type="submit" id="btnSubmit" class="primary-button" style="margin-top: 0.5rem;">+ Save
+                    Assignment</button>
             </form>
         </section>
 
-        <!-- Assignment List Display -->
+        <!-- Assignments Firestore Stream List -->
         <section>
             <div class="page-header" style="margin-bottom: 1.5rem;">
-                <h2 style="font-size: 1.5rem;">Your Assignments</h2>
-                <p>Mark completed assignments and delete assignments you no longer need.</p>
+                <h2 style="font-size: 1.5rem;">Your Task List</h2>
             </div>
-            <div id="assignmentList" class="assignment-list"></div>
-        </section>
-
-        <!-- Navigation CTA Section -->
-        <section class="form-card" style="margin-top: 3rem;">
-            <h2>Stay on Track</h2>
-            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
-                After managing your assignments, you can set academic goals and monitor your overall progress.
-            </p>
-            <div class="hero-buttons">
-                <a href="schedule.html" class="secondary-button">← Study Schedule</a>
-                <a href="goals.html" class="primary-button">Set Your Goals →</a>
+            <div id="assignmentList" class="assignment-list">
+                <div class="card empty-state">
+                    <p>Please sign in with Google to view and sync your cloud assignments.</p>
+                </div>
             </div>
         </section>
     </main>
@@ -385,42 +457,39 @@
         </div>
     </footer>
 
-    <!-- App Script -->
-    <script src="js/app.js"></script>
-
-    <!-- Firebase Auth Module Logic -->
+    <!-- Firebase Operations -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
+        import { auth, db, provider } from "./js/firebase-config.js";
         import {
-            getAuth,
-            GoogleAuthProvider,
             signInWithPopup,
             signOut,
             onAuthStateChanged
         } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import {
+            collection,
+            addDoc,
+            query,
+            where,
+            onSnapshot,
+            doc,
+            updateDoc,
+            deleteDoc,
+            serverTimestamp
+        } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCDvbEQO1_moLrkYCYZrUpbtODXctXa-ss",
-            authDomain: "studyflow-8add1.firebaseapp.com",
-            projectId: "studyflow-8add1",
-            storageBucket: "studyflow-8add1.firebasestorage.app",
-            messagingSenderId: "809255887815",
-            appId: "1:809255887815:web:bbf697ee87cc0db6ce2fe2",
-            measurementId: "G-0E5HM4Y19D"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
-
+        // DOM Elements
         const btnLogin = document.getElementById("btn-login");
         const btnLogout = document.getElementById("btn-logout");
         const userProfile = document.getElementById("user-profile");
         const userName = document.getElementById("user-name");
         const userAvatar = document.getElementById("user-avatar");
+        const assignmentForm = document.getElementById("assignmentForm");
+        const assignmentList = document.getElementById("assignmentList");
 
+        let currentUser = null;
+        let unsubscribeAssignments = null;
+
+        // Authentication Handlers
         btnLogin?.addEventListener("click", async () => {
             try {
                 await signInWithPopup(auth, provider);
@@ -438,18 +507,141 @@
         });
 
         onAuthStateChanged(auth, (user) => {
+            currentUser = user;
             if (user) {
                 userAvatar.src = user.photoURL || "https://via.placeholder.com/32";
                 userName.textContent = user.displayName || user.email;
                 btnLogin.classList.add("hidden");
                 userProfile.classList.remove("hidden");
+
+                listenToAssignments(user.uid);
             } else {
                 userAvatar.src = "";
                 userName.textContent = "";
                 userProfile.classList.add("hidden");
                 btnLogin.classList.remove("hidden");
+
+                if (unsubscribeAssignments) unsubscribeAssignments();
+                assignmentList.innerHTML = `
+          <div class="card empty-state">
+            <p>Please sign in with Google to view and sync your cloud assignments.</p>
+          </div>`;
             }
         });
+
+        // Save Assignment to Firestore
+        assignmentForm?.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            if (!currentUser) {
+                alert("Please sign in with Google to add assignments.");
+                return;
+            }
+
+            const title = document.getElementById("assignmentTitle").value.trim();
+            const subject = document.getElementById("assignmentSubject").value.trim();
+            const dueDate = document.getElementById("dueDate").value;
+
+            try {
+                await addDoc(collection(db, "assignments"), {
+                    userId: currentUser.uid,
+                    title: title,
+                    subject: subject,
+                    dueDate: dueDate,
+                    status: "Pending",
+                    createdAt: serverTimestamp()
+                });
+
+                assignmentForm.reset();
+            } catch (error) {
+                console.error("Error saving to Firestore:", error);
+                alert("Failed to save assignment. Please try again.");
+            }
+        });
+
+        // Real-Time Query Listener
+        function listenToAssignments(uid) {
+            const q = query(
+                collection(db, "assignments"),
+                where("userId", "==", uid)
+            );
+
+            unsubscribeAssignments = onSnapshot(q, (snapshot) => {
+                if (snapshot.empty) {
+                    assignmentList.innerHTML = `
+            <div class="card empty-state">
+              <p>No assignments found in your database. Add one above!</p>
+            </div>`;
+                    return;
+                }
+
+                assignmentList.innerHTML = "";
+                snapshot.forEach((docSnap) => {
+                    const item = docSnap.data();
+                    const docId = docSnap.id;
+                    const isCompleted = item.status === "Completed";
+
+                    const card = document.createElement("div");
+                    card.className = `assignment-card ${isCompleted ? "completed" : ""}`;
+                    card.innerHTML = `
+            <div class="assignment-info">
+              <h3 class="assignment-title">${escapeHTML(item.title)}</h3>
+              <div class="assignment-meta">
+                <span>📚 ${escapeHTML(item.subject)}</span>
+                <span>📅 Due: ${escapeHTML(item.dueDate)}</span>
+                <span class="badge ${isCompleted ? "badge-completed" : "badge-pending"}">${item.status}</span>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="btn-action btn-toggle" data-id="${docId}" data-status="${item.status}">
+                ${isCompleted ? "Mark Pending" : "Mark Complete"}
+              </button>
+              <button class="btn-action btn-delete" data-id="${docId}">Delete</button>
+            </div>
+          `;
+                    assignmentList.appendChild(card);
+                });
+
+                attachCardEventListeners();
+            }, (error) => {
+                console.error("Firestore snapshot error:", error);
+            });
+        }
+
+        // Toggle & Delete Operations
+        function attachCardEventListeners() {
+            document.querySelectorAll(".btn-toggle").forEach(button => {
+                button.addEventListener("click", async (e) => {
+                    const docId = e.target.getAttribute("data-id");
+                    const currentStatus = e.target.getAttribute("data-status");
+                    const newStatus = currentStatus === "Completed" ? "Pending" : "Completed";
+
+                    try {
+                        await updateDoc(doc(db, "assignments", docId), { status: newStatus });
+                    } catch (err) {
+                        console.error("Error updating status:", err);
+                    }
+                });
+            });
+
+            document.querySelectorAll(".btn-delete").forEach(button => {
+                button.addEventListener("click", async (e) => {
+                    const docId = e.target.getAttribute("data-id");
+                    if (confirm("Are you sure you want to delete this assignment?")) {
+                        try {
+                            await deleteDoc(doc(db, "assignments", docId));
+                        } catch (err) {
+                            console.error("Error deleting document:", err);
+                        }
+                    }
+                });
+            });
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g,
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
     </script>
 </body>
 
